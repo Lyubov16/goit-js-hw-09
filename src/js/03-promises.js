@@ -1,0 +1,42 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+const form = document.querySelector('.form');
+const firstDelay = document.querySelector('[name ="delay"]');
+const delayStep = document.querySelector('[name = "step"]');
+const amountInput = document.querySelector('[name = "amount"]');
+
+
+function createPromise(position, delay) {
+  const shouldResolve = Math.random() > 0.3;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay })
+      }
+    }, delay);
+  });
+}
+
+
+form.addEventListener('submit', onFormSubmit);
+
+function onFormSubmit(event) {
+  event.preventDefault();
+
+  let delay = Number(firstDelay.value);
+  const step = Number(delayStep.value);
+  const amount = Number(amountInput.value);
+
+  for (let i = 1; i <= amount; i+=1) {
+    createPromise(i, delay)
+      .then(({ position, delay }) => {
+        Notify.success(``);
+      })
+      .catch(({ position, delay }) => {
+        Notify.failure(``)
+      });
+    delay += step
+  }
+};
