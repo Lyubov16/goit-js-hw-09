@@ -48,7 +48,7 @@ function onClickStartBtn() {
     const currentTime = new Date();
     const timer = refsDate - currentTime;
 
-    if (timer < 1000) {
+    if (timer < 0) {
       clearInterval(intervalId);
       refs.startBtn.disabled = false;
       refs.input.disabled = false;
